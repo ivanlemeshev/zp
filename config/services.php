@@ -2,7 +2,7 @@
 
 return [
     [
-        'name' => 'report_builder',
+        'name' => 'reportBuilder',
         'class' => \App\Service\ReportBuilder::class,
     ],
     [

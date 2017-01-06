@@ -4,6 +4,7 @@ require_once dirname(__DIR__) .'/vendor/autoload.php';
 
 $config = require(dirname(__DIR__) . '/config/main.php');
 $services = require(dirname(__DIR__) . '/config/services.php');
+$routes = require(dirname(__DIR__) . '/config/routes.php');
 
 $app = new Silex\Application();
 
@@ -24,7 +25,8 @@ $app['services'] = function () use ($services) {
     }, []);
 };
 
-$app->mount('/', new \App\Controller\DefaultController());
-$app->mount('/reports', new \App\Controller\ReportController());
+foreach ($routes['routes'] as $route) {
+    $app->mount($route['prefix'], new $routes['provider']($route['controller'], $route['actions']));
+}
 
 $app->run();
