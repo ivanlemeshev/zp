@@ -2,14 +2,16 @@
 
 require_once dirname(__DIR__) .'/vendor/autoload.php';
 
+$config = require(dirname(__DIR__) . '/config/main.php');
+
 $app = new Silex\Application();
 
 $app->register(new Silex\Provider\MonologServiceProvider(), [
-    'monolog.logfile' => dirname(__DIR__) . '/logs/app.log',
+    'monolog.logfile' => $config['logFile'],
 ]);
 
 $app->register(new Silex\Provider\TwigServiceProvider(), [
-    'twig.path' => dirname(__DIR__) . '/src/Resources/views',
+    'twig.path' => $config['viewsPath'],
 ]);
 
 $app->get('/', function (\Silex\Application $app) {
