@@ -1,0 +1,26 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %}Отчеты - топ слов по упоминанию их в заголовках вакансий{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <a href="{{ app.url_generator.generate('default.index') }}">назад</a>
+        <h1 class="page-header">Топ слов по упоминанию их в заголовках вакансий</h1>
+        <table>
+            <thead>
+            <tr>
+                <th align="left">Слово</th>
+                <th align="right">Количество</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for word, count in wordsTop %}
+                <tr>
+                    <td align="left">{{ word }}</td>
+                    <td align="right">{{ count }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

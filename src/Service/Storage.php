@@ -41,6 +41,38 @@ class Storage
     }
 
     /**
+     * Возвращает список новых вакансий, которые добавлены сегодня.
+     * @param int $geoId
+     * @return array
+     */
+    public function getTodayNewJobs(int $geoId): array
+    {
+        $offset = 0;
+        $limit = 100;
+        $result = [];
+
+        do {
+            $data = $this->getJobs([
+                'is_new_only' => true,
+                'period' => 'today',
+                'geo_id' => $geoId,
+                'state' => 1,
+                'limit' => $limit,
+                'offset' => $offset
+            ]);
+
+            if (isset($data['vacancies'])) {
+                $result = array_merge($result, $data['vacancies']);
+            }
+
+            $offset += $limit;
+        } while (isset($data['vacancies']) && !empty($data['vacancies']));
+
+        return $result;
+    }
+
+
+    /**
      * Длает запрос к API и возвращает результат.
      * @param array $params
      * @return array

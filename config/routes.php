@@ -25,6 +25,12 @@ return [
                     'action' => 'topOfJobsByRubric',
                     'name'   => 'reports.top_of_jobs_by_rubric',
                 ],
+                [
+                    'route'  => '/top_of_words_in_job_titles',
+                    'method' => 'GET',
+                    'action' => 'topOfWordsInJobTitles',
+                    'name'   => 'reports.top_of_words_in_job_titles',
+                ],
             ],
         ],
     ],

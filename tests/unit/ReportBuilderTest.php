@@ -17,7 +17,7 @@ class ReportBuilderTest extends \Codeception\Test\Unit
         $this->reportBuilder = new \App\Service\ReportBuilder();
     }
 
-    public function testBuildTopJobsByRubricReport()
+    public function testBuildTopOfJobsByRubricReport()
     {
         $rubrics = [
             ['title' => 'Торговля розничная', 'count' => 123],
@@ -32,5 +32,33 @@ class ReportBuilderTest extends \Codeception\Test\Unit
         ];
 
         $this->assertEquals($expected, $this->reportBuilder->buildTopOfJobsByRubricReport($rubrics));
+    }
+
+    public function testBuildTopWordsInJobTitlesReport()
+    {
+        $jobs = [
+            ['header' => 'PHP-разработчик'],
+            ['header' => 'PHP-разработчик'],
+            ['header' => 'Менеджер по рекламе'],
+            ['header' => 'Менеджер по продажам'],
+            ['header' => 'PHP-разработчик'],
+        ];
+
+        $expected = [
+            'PHP-разработчик' => 3,
+            'Менеджер' => 2,
+            'по' => 2,
+            'рекламе' => 1,
+            'продажам' => 1,
+        ];
+
+        $this->assertEquals($expected, $this->reportBuilder->buildTopOFWordsInJobTitlesReport($jobs));
+    }
+
+    public function testGetWords()
+    {
+        $string = 'Это рандомная строка строка   привет-привет abc 123 ±!@#$%^&*()_+==\'"~`';
+        $expected = explode(' ', 'Это рандомная строка строка привет-привет abc 123');
+        $this->assertEquals($expected, $this->reportBuilder->getWords($string));
     }
 }
