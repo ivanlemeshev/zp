@@ -1,0 +1,14 @@
+zp_app:
+    build: ./app
+    expose:
+        - "9000"
+    volumes:
+        - ./..:/var/www/html
+zp_nginx:
+    build: ./nginx
+    ports:
+        - "8090:80"
+    links:
+        - zp_app
+    volumes_from:
+        - zp_app
