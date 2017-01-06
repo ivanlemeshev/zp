@@ -3,6 +3,7 @@
 require_once dirname(__DIR__) .'/vendor/autoload.php';
 
 $config = require(dirname(__DIR__) . '/config/main.php');
+$services = require(dirname(__DIR__) . '/config/services.php');
 
 $app = new Silex\Application();
 
@@ -13,6 +14,13 @@ $app->register(new Silex\Provider\MonologServiceProvider(), [
 $app->register(new Silex\Provider\TwigServiceProvider(), [
     'twig.path' => $config['viewsPath'],
 ]);
+
+$app['services'] = function () use ($services) {
+    return array_reduce($services, function ($acc, $service) {
+        $acc[$service['name']] = new $service['class'];
+        return $acc;
+    }, []);
+};
 
 $app->get('/', function (\Silex\Application $app) {
     return $app['twig']->render('index.twig');
@@ -35,12 +43,9 @@ $app->get('/reports/top_of_jobs_by_rubric', function (\Silex\Application $app) {
     $rubricsTop = [];
 
     if (isset($data['metadata']['categories_facets'])) {
-        $rubricsTop = array_reduce($data['metadata']['categories_facets'], function ($acc, $item) {
-            $acc[$item['title']] = $item['count'];
-            return $acc;
-        }, []);
-
-        arsort($rubricsTop);
+        /** @var \App\Service\ReportBuilder $reportBuilder */
+        $reportBuilder = $app['services']['report_builder'];
+        $rubricsTop = $reportBuilder->buildTopOfJobsByRubricReport($data['metadata']['categories_facets']);
     }
 
     return $app['twig']->render('reports/top_of_jobs_by_rubric.twig', compact('rubricsTop'));
