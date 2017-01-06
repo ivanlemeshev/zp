@@ -1,0 +1,26 @@
+{% extends 'layouts/main.twig' %}
+
+{% block title %}Отчеты - топ вакансий по рубрикам{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <a href="{{ app.url_generator.generate('default.index') }}">назад</a>
+        <h1 class="page-header">Топ вакансий по рубрикам</h1>
+        <table>
+            <thead>
+            <tr>
+                <th align="left">Рубрика</th>
+                <th align="right">Количество</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for name, count in rubricsTop %}
+                <tr>
+                    <td align="left">{{ name }}</td>
+                    <td align="right">{{ count }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
