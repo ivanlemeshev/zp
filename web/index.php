@@ -7,6 +7,8 @@ $services = require(dirname(__DIR__) . '/config/services.php');
 
 $app = new Silex\Application();
 
+$app['config'] = $config;
+
 $app->register(new Silex\Provider\MonologServiceProvider(), [
     'monolog.logfile' => $config['logFile'],
 ]);
@@ -23,17 +25,6 @@ $app['services'] = function () use ($services) {
 };
 
 $app->mount('/', new \App\Controller\DefaultController());
-
-$app->get('/reports/top_of_jobs_by_rubric', function (\Silex\Application $app) use ($config) {
-    /** @var \App\Service\Storage $storage */
-    $storage = $app['services']['storage'];
-    $rubrics = $storage->getRubricsForTodayNewJobs($config['geoId']);
-
-    /** @var \App\Service\ReportBuilder $reportBuilder */
-    $reportBuilder = $app['services']['report_builder'];
-    $rubricsTop = $reportBuilder->buildTopOfJobsByRubricReport($rubrics);
-
-    return $app['twig']->render('reports/top_of_jobs_by_rubric.twig', compact('rubricsTop'));
-})->bind('reports.top_of_jobs_by_rubric');
+$app->mount('/reports', new \App\Controller\ReportController());
 
 $app->run();
