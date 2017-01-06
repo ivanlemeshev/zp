@@ -9,3 +9,6 @@ run:
 
 stop:
 	cd docker; docker-compose stop
+
+test:
+	./vendor/bin/codecept run

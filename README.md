@@ -23,3 +23,9 @@ $ make run
 ```bash
 $ make stop
 ```
+
+## Запуск тестов
+
+```bash
+$ make test
+```
