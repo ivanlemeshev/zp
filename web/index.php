@@ -22,9 +22,7 @@ $app['services'] = function () use ($services) {
     }, []);
 };
 
-$app->get('/', function (\Silex\Application $app) {
-    return $app['twig']->render('index.twig');
-})->bind('default.index');
+$app->mount('/', new \App\Controller\DefaultController());
 
 $app->get('/reports/top_of_jobs_by_rubric', function (\Silex\Application $app) use ($config) {
     /** @var \App\Service\Storage $storage */
