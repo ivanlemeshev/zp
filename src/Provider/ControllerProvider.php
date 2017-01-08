@@ -8,9 +8,9 @@ use Silex\ControllerCollection;
 
 class ControllerProvider implements ControllerProviderInterface
 {
-    public $class;
+    private $class;
 
-    public $actions = [];
+    private $actions = [];
 
     public function __construct(string $class, array $actions)
     {
