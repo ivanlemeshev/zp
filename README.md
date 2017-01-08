@@ -5,7 +5,7 @@
 ## Установка
 
 ```bash
-$ git clone
+$ git clone git@github.com:ivanlemeshev/zp.git
 $ cd zp
 $ composer install
 ```
