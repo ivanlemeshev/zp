@@ -9,4 +9,11 @@ return [
         'name' => 'storage',
         'class' => \App\Service\Storage::class,
     ],
+    [
+        'name' => 'cache',
+        'class' => \App\Service\Cache\FileCache::class,
+        'params' => [
+            'path' => dirname(__DIR__) . '/cache',
+        ],
+    ],
 ];

@@ -3,11 +3,6 @@
 class ReportBuilderTest extends \Codeception\Test\Unit
 {
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
      * @var \App\Service\ReportBuilder
      */
     protected $reportBuilder;
