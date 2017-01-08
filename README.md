@@ -7,13 +7,13 @@
 ```bash
 $ git clone
 $ cd zp
-$ make install
+$ composer install
 ```
 
 ## Запуск приложения
 
 ```bash
-$ make run
+$ composer start
 ```
 
 Приложение доступно по адресу [http://localhost:8090](http://localhost:8090) 
@@ -21,11 +21,12 @@ $ make run
 ## Отсановка приложения
 
 ```bash
-$ make stop
+$ composer stop
 ```
 
 ## Запуск тестов
 
 ```bash
-$ make test
+$ composer start
+$ composer test
 ```
