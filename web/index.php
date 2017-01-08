@@ -8,6 +8,9 @@ $routes = require(dirname(__DIR__) . '/config/routes.php');
 
 $app = new Silex\Application();
 
+Symfony\Component\Debug\ErrorHandler::register();
+Symfony\Component\Debug\ExceptionHandler::register(false);
+
 $app['config'] = $config;
 
 $app->register(new Silex\Provider\MonologServiceProvider(), [
@@ -20,7 +23,10 @@ $app->register(new Silex\Provider\TwigServiceProvider(), [
 
 $app['services'] = function () use ($services) {
     return array_reduce($services, function ($acc, $service) {
-        $acc[$service['name']] = new $service['class'];
+        $acc[$service['name']] = isset($service['params'])
+            ? new $service['class']($service['params'])
+            : new $service['class'];
+
         return $acc;
     }, []);
 };
